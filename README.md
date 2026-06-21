@@ -2,34 +2,6 @@
 
 A full-stack tourism and heritage site reservation platform with **absolute transaction safety under high concurrency**, **JWT-secured APIs**, and a **real-time monitoring dashboard**.
 
-## 🎯 Core Features
-
-✅ **System Integrity (40%)**
-- Application-level locking mechanism (pessimistic locking)
-- MongoDB ACID transactions for multi-document consistency
-- Optimistic versioning as secondary safety mechanism
-- Prevents double-booking under concurrent load
-
-✅ **Security (30%)**
-- JWT authentication with role-based access control
-- IDOR prevention (users can only access their own bookings)
-- Secure password hashing with bcryptjs
-- Protected API endpoints with token verification
-
-✅ **Code Quality & Architecture (20%)**
-- Clean separation of concerns (routes → controllers → models)
-- Proper TypeScript-ready structure with validation
-- Comprehensive error handling middleware
-- Database connection management and transaction handling
-
-✅ **UX/UI & Real-Time Functionality (10%)**
-- Real-time capacity updates via WebSocket (Socket.io)
-- Responsive React dashboard
-- Instant feedback on booking status
-- Intuitive booking interface
-
----
-
 ## 🏗️ Project Architecture
 
 ```
