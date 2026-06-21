@@ -36,7 +36,7 @@ A full-stack tourism and heritage site reservation platform with **absolute tran
 ---
 
 =======
->>>>>>> 42f258939b6dabc4763e0ad95d30e160464ba53b
+
 ## 🏗️ Project Architecture
 
 ```
