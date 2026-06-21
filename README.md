@@ -5,24 +5,28 @@ A full-stack tourism and heritage site reservation platform with **absolute tran
 ## 🎯 Core Features
 
 ✅ **System Integrity (40%)**
+
 - Application-level locking mechanism (pessimistic locking)
 - MongoDB ACID transactions for multi-document consistency
 - Optimistic versioning as secondary safety mechanism
 - Prevents double-booking under concurrent load
 
 ✅ **Security (30%)**
+
 - JWT authentication with role-based access control
 - IDOR prevention (users can only access their own bookings)
 - Secure password hashing with bcryptjs
 - Protected API endpoints with token verification
 
 ✅ **Code Quality & Architecture (20%)**
+
 - Clean separation of concerns (routes → controllers → models)
 - Proper TypeScript-ready structure with validation
 - Comprehensive error handling middleware
 - Database connection management and transaction handling
 
 ✅ **UX/UI & Real-Time Functionality (10%)**
+
 - Real-time capacity updates via WebSocket (Socket.io)
 - Responsive React dashboard
 - Instant feedback on booking status
@@ -87,21 +91,24 @@ heritage-reservation/
 ## 🔐 Security Architecture
 
 ### JWT Authentication
+
 - Token generated on login/register
 - Stored in localStorage (frontend)
 - Sent via `Authorization: Bearer <token>` header
 - Verified on every protected route
 
 ### IDOR Prevention
+
 ```javascript
 // Example: User can only access their own bookings
 const reservation = await Reservation.findOne({
   _id: reservationId,
-  user: userId  // ← Ensures ownership
+  user: userId, // ← Ensures ownership
 });
 ```
 
 ### JWT Tampering & Privilege Escalation Prevention
+
 - JWTs are signed with `process.env.JWT_SECRET`
 - Tokens are verified using explicit `HS256` algorithm
 - Payload is validated to contain only `{ id, role }`
@@ -109,11 +116,13 @@ const reservation = await Reservation.findOne({
 - Admin routes and socket admin rooms are protected by role checks
 
 ### Standalone MongoDB Transaction Fallback
+
 - If MongoDB is running as a standalone server, ACID transactions are unavailable
 - The booking flow falls back to the lock-first pattern with a compensating rollback on failure
 - This still preserves TOCTOU safety for same-slot booking attempts
 
 ### Password Security
+
 - Hashed with bcryptjs (10 salt rounds)
 - Never stored in plain text
 - Compared securely on login
@@ -123,21 +132,30 @@ const reservation = await Reservation.findOne({
 ## ⚙️ Concurrency Control Mechanism
 
 ### The Challenge
+
 Multiple users booking the same time slot simultaneously must not result in overbooking.
 
 ### Our Solution (3-Layer Defense)
 
 #### 1️⃣ Application-Level Lock (Pessimistic Locking)
+
 ```javascript
 // Lock acquired before any database operation
 const lockResourceId = `booking_${siteId}_${date}_${time}`;
-const lockAcquired = await LockManager.acquireLock(lockResourceId, lockerId, 5, 150);
+const lockAcquired = await LockManager.acquireLock(
+  lockResourceId,
+  lockerId,
+  5,
+  150,
+);
 ```
+
 - Creates a MongoDB document to prevent concurrent access
 - Retries 5 times with 150ms delays
 - Auto-releases after 30 seconds (safety mechanism)
 
 #### 2️⃣ MongoDB ACID Transactions
+
 ```javascript
 const session = await mongoose.startSession();
 session.startTransaction();
@@ -146,18 +164,20 @@ try {
   // All database operations within transaction
   await TimeSlot.findByIdAndUpdate(..., { session });
   await Reservation.create([...], { session });
-  
+
   await session.commitTransaction();
 } catch (error) {
   await session.abortTransaction();
 }
 ```
+
 - Multi-document consistency
 - Atomicity: all-or-nothing operations
 - Isolation: no dirty reads between transactions
 - Durability: persistent after commit
 
 #### 3️⃣ Optimistic Versioning (Fallback)
+
 ```javascript
 // MongoDB's `__v` field automatically increments on updates
 // Prevents concurrent modifications of the same document
@@ -168,6 +188,7 @@ try {
 ## 📊 Database Schema Design
 
 ### TimeSlot Collection
+
 ```javascript
 {
   _id: ObjectId,
@@ -181,6 +202,7 @@ try {
 ```
 
 ### Indexes for Performance
+
 ```javascript
 // Unique compound index prevents duplicate slots
 timeSlotSchema.index({ site: 1, date: 1, time: 1 }, { unique: true });
@@ -195,6 +217,7 @@ reservationSchema.index({ site: 1, date: 1 });
 ## 🚀 Setup & Installation
 
 ### Prerequisites
+
 - Node.js 16+
 - MongoDB 4.0+ (with ACID transaction support)
 - npm or yarn
@@ -202,18 +225,21 @@ reservationSchema.index({ site: 1, date: 1 });
 ### Backend Setup
 
 1. **Install dependencies**
+
    ```bash
    cd backend
    npm install
    ```
 
 2. **Configure environment**
+
    ```bash
    cp .env.example .env
    # Edit .env with your MongoDB URI and JWT secret
    ```
 
 3. **Example .env**
+
    ```
    PORT=5000
    MONGODB_URI=mongodb://localhost:27017/heritage-reservation
@@ -223,13 +249,14 @@ reservationSchema.index({ site: 1, date: 1 });
    ```
 
 4. **Start MongoDB**
+
    ```bash
    # macOS/Linux with Homebrew
    brew services start mongodb-community
-   
+
    # Windows (if installed as service)
    net start MongoDB
-   
+
    # Or use Docker
    docker run -d -p 27017:27017 --name mongo mongo:5.0
    ```
@@ -243,6 +270,7 @@ reservationSchema.index({ site: 1, date: 1 });
 ### Frontend Setup
 
 1. **Install dependencies**
+
    ```bash
    cd frontend
    npm install
@@ -259,15 +287,18 @@ reservationSchema.index({ site: 1, date: 1 });
 ## 📝 How to Use
 
 ### 1. Register
+
 - Navigate to `/register`
 - Create account with name, email, password
 - Automatically logged in
 
 ### 2. Browse Sites
+
 - Dashboard shows all available heritage sites
 - See daily and hourly capacity limits
 
 ### 3. Make a Booking
+
 - Click "Book Tickets" on a site
 - Select date and time
 - Choose number of tickets (1-10)
@@ -275,10 +306,12 @@ reservationSchema.index({ site: 1, date: 1 });
 - Confirm booking
 
 ### 4. View Bookings
+
 - "My Bookings" section shows all reservations
 - Cancel bookings if needed
 
 ### 5. Admin Features
+
 - Create/edit heritage sites (requires admin role)
 - Set capacity limits per site
 
@@ -291,28 +324,36 @@ reservationSchema.index({ site: 1, date: 1 });
 Create `load-test.js` in backend:
 
 ```javascript
-const axios = require('axios');
+const axios = require("axios");
 
 async function stressTest() {
-  const siteId = 'YOUR_SITE_ID';
-  const date = '2024-06-30';
-  const time = '10:00';
-  
+  const siteId = "YOUR_SITE_ID";
+  const date = "2024-06-30";
+  const time = "10:00";
+
   // Simulate 50 concurrent booking attempts for same slot
-  const requests = Array(50).fill().map(() =>
-    axios.post('http://localhost:5000/api/bookings', {
-      siteId,
-      date,
-      time,
-      ticketCount: 1
-    }, {
-      headers: { Authorization: `Bearer ${token}` }
-    }).catch(e => ({ error: e.response?.status }))
-  );
+  const requests = Array(50)
+    .fill()
+    .map(() =>
+      axios
+        .post(
+          "http://localhost:5000/api/bookings",
+          {
+            siteId,
+            date,
+            time,
+            ticketCount: 1,
+          },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          },
+        )
+        .catch((e) => ({ error: e.response?.status })),
+    );
 
   const results = await Promise.all(requests);
-  const successful = results.filter(r => !r.error).length;
-  const failed = results.filter(r => r.error).length;
+  const successful = results.filter((r) => !r.error).length;
+  const failed = results.filter((r) => r.error).length;
 
   console.log(`✓ Successful: ${successful}`);
   console.log(`✗ Failed: ${failed}`);
@@ -322,6 +363,7 @@ stressTest();
 ```
 
 **Expected Behavior:**
+
 - Only capacity number of bookings succeed
 - Rest get 429 "Slot being booked" error
 - Zero double-bookings
@@ -332,14 +374,16 @@ stressTest();
 ## 🔍 Understanding the Key Code
 
 ### LockManager (src/utils/lockManager.js)
+
 **Purpose:** Prevents race conditions during booking
 
 **Key Method:**
+
 ```javascript
 static async withLock(resourceId, lockerId, callback) {
   const acquired = await this.acquireLock(resourceId, lockerId);
   if (!acquired) throw new Error('Lock timeout');
-  
+
   try {
     return await callback();
   } finally {
@@ -349,9 +393,11 @@ static async withLock(resourceId, lockerId, callback) {
 ```
 
 ### Booking Controller (src/controllers/bookingController.js)
+
 **Purpose:** Handles the core booking flow with safety guarantees
 
 **Key Steps:**
+
 1. Acquire application-level lock
 2. Start MongoDB transaction
 3. Fetch time slot
@@ -366,24 +412,26 @@ static async withLock(resourceId, lockerId, callback) {
 ## 📡 Real-Time Updates with WebSocket
 
 ### How It Works
+
 1. Frontend connects to Socket.io on page load
 2. Joins a room for each site (`site_${siteId}`)
 3. Backend emits capacity updates after successful bookings
 4. Frontend receives and updates UI instantly (no page refresh)
 
 ### Example Event Flow
+
 ```javascript
 // Backend
-io.to(`site_${siteId}`).emit('capacity-update', {
+io.to(`site_${siteId}`).emit("capacity-update", {
   slotId: timeSlot._id,
-  availableTickets: updatedCount
+  availableTickets: updatedCount,
 });
 
 // Frontend
-socket.on('capacity-update', (data) => {
-  setCapacityUpdates(prev => ({
+socket.on("capacity-update", (data) => {
+  setCapacityUpdates((prev) => ({
     ...prev,
-    [data.slotId]: data.availableTickets
+    [data.slotId]: data.availableTickets,
   }));
 });
 ```
@@ -393,19 +441,23 @@ socket.on('capacity-update', (data) => {
 ## 🐛 Debugging Tips
 
 ### Check Locks
+
 ```javascript
 // In browser console
-const lock = await db.locks.findOne({ resourceId: 'booking_xxx' });
+const lock = await db.locks.findOne({ resourceId: "booking_xxx" });
 ```
 
 ### Monitor Transactions
+
 ```bash
 # MongoDB shell
 db.currentOp(true)  # See active operations
 ```
 
 ### API Testing
+
 Use Postman or curl:
+
 ```bash
 # Register
 curl -X POST http://localhost:5000/api/auth/register \
@@ -453,21 +505,27 @@ curl -X POST http://localhost:5000/api/bookings \
 ## 📞 Common Issues
 
 **MongoDB Connection Error**
+
 ```
 Error: connect ECONNREFUSED 127.0.0.1:27017
 ```
+
 → Make sure MongoDB is running
 
 **CORS Error in Frontend**
+
 ```
 Access to XMLHttpRequest blocked by CORS policy
 ```
+
 → Backend CORS is already configured, ensure port 3000 in whitelist
 
 **WebSocket Connection Failed**
+
 ```
 WebSocket handshake failed
 ```
+
 → Backend Socket.io must be running, check port 5000
 
 ---
@@ -484,6 +542,7 @@ WebSocket handshake failed
 ## 🎓 Assignment Submission Notes
 
 **What to Submit:**
+
 1. `backend/` folder with all source code
 2. `frontend/` folder with all source code
 3. Updated `.env` (with dummy values)
@@ -491,6 +550,7 @@ WebSocket handshake failed
 5. A concurrency test report showing zero double-bookings
 
 **What Evaluators Will Check:**
+
 - Codebase for AI generation artifacts
 - Functional correctness under concurrent load
 - Security vulnerabilities

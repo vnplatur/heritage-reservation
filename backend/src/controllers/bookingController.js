@@ -69,7 +69,13 @@ exports.createBooking = async (req, res, next) => {
     const requestedDate = new Date(date);
 
     // ===== VALIDATION =====
-    if (!siteId || !date || !time || !ticketCount || isNaN(requestedDate.getTime())) {
+    if (
+      !siteId ||
+      !date ||
+      !time ||
+      !ticketCount ||
+      isNaN(requestedDate.getTime())
+    ) {
       if (transactionsEnabled) await session.abortTransaction();
       return res.status(400).json({
         success: false,
@@ -170,7 +176,8 @@ exports.createBooking = async (req, res, next) => {
         if (transactionsEnabled) await session.abortTransaction();
         return res.status(400).json({
           success: false,
-          message: "Not enough tickets available. Please choose a different time slot.",
+          message:
+            "Not enough tickets available. Please choose a different time slot.",
         });
       }
 
@@ -275,7 +282,12 @@ exports.cancelBooking = async (req, res, next) => {
     const userId = req.user.id;
 
     const lockResourceId = `cancel_${reservationId}`;
-    const lockAcquired = await LockManager.acquireLock(lockResourceId, lockerId, 5, 150);
+    const lockAcquired = await LockManager.acquireLock(
+      lockResourceId,
+      lockerId,
+      5,
+      150,
+    );
     if (!lockAcquired) {
       if (transactionsEnabled) await session.abortTransaction();
       return res.status(429).json({
@@ -289,7 +301,8 @@ exports.cancelBooking = async (req, res, next) => {
         _id: reservationId,
         user: userId,
       });
-      if (transactionsEnabled) reservationQuery = reservationQuery.session(session);
+      if (transactionsEnabled)
+        reservationQuery = reservationQuery.session(session);
       const reservation = await reservationQuery;
 
       if (!reservation) {

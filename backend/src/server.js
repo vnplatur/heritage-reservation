@@ -45,15 +45,31 @@ io.on("connection", (socket) => {
 
   let decoded;
   try {
-    decoded = jwt.verify(token, process.env.JWT_SECRET);
+    decoded = jwt.verify(token, process.env.JWT_SECRET, {
+      algorithms: ["HS256"],
+    });
   } catch (error) {
     console.warn(`Socket ${socket.id} denied - invalid token.`);
     socket.disconnect(true);
     return;
   }
 
+  if (
+    !decoded ||
+    !decoded.id ||
+    typeof decoded.id !== "string" ||
+    typeof decoded.role !== "string" ||
+    !["user", "admin"].includes(decoded.role)
+  ) {
+    console.warn(`Socket ${socket.id} denied - invalid token payload.`);
+    socket.disconnect(true);
+    return;
+  }
+
   socket.user = decoded;
-  console.log(`✓ User connected: ${socket.id} (${socket.user.id})`);
+  console.log(
+    `✓ User connected: ${socket.id} (${socket.user.id}) role=${socket.user.role}`,
+  );
 
   if (socket.user.role === "admin") {
     socket.join("admin-dashboard");

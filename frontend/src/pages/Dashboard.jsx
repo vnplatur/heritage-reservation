@@ -134,7 +134,7 @@ const Dashboard = () => {
 
         <div className="dashboard-userline">
           <p>
-            Welcome, {user?.name}! |{' '}
+            Welcome, {user?.name}! |{" "}
             <button
               type="button"
               className="logout-button"
@@ -174,7 +174,11 @@ const Dashboard = () => {
         </section>
 
         <section className="dashboard-section booking-panel">
-          <h2>{selectedSite ? `Book at ${selectedSite.name}` : 'Booking Interface'}</h2>
+          <h2>
+            {selectedSite
+              ? `Book at ${selectedSite.name}`
+              : "Booking Interface"}
+          </h2>
           {selectedSite ? (
             <BookingForm
               siteId={selectedSite._id}
@@ -207,7 +211,7 @@ const Dashboard = () => {
                   </div>
                   <div className="booking-details">
                     <p>
-                      📅 {new Date(booking.date).toLocaleDateString()} at{' '}
+                      📅 {new Date(booking.date).toLocaleDateString()} at{" "}
                       {booking.time}
                     </p>
                     <p>🎫 {booking.ticketCount} ticket(s)</p>

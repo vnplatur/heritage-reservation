@@ -21,7 +21,9 @@ const connectDB = async () => {
     connection.connection.transactionsSupported = isReplicaSet || isMongos;
 
     console.log(`✓ MongoDB Connected: ${connection.connection.host}`);
-    console.log(`✓ Transactions supported: ${connection.connection.transactionsSupported}`);
+    console.log(
+      `✓ Transactions supported: ${connection.connection.transactionsSupported}`,
+    );
     return connection;
   } catch (error) {
     console.error(`✗ Error connecting to MongoDB: ${error.message}`);
