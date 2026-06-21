@@ -250,12 +250,119 @@
   background: #b22;
 }
 
-.empty-state {
-  text-align: center;
-  color: #999;
-  padding: 30px 0;
-  font-size: 14px;
-}
+  .admin-site-manager {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .admin-site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .admin-site-header h3 {
+    margin: 0;
+    font-size: 18px;
+  }
+
+  .admin-site-form {
+    display: grid;
+    gap: 15px;
+  }
+
+  .admin-site-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 13px;
+    color: #444;
+  }
+
+  .admin-site-form input,
+  .admin-site-form textarea {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+  }
+
+  .admin-site-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+
+  .admin-site-list {
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+  }
+
+  .admin-site-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    background: #f9f9f9;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #eee;
+  }
+
+  .admin-site-item strong {
+    font-size: 14px;
+  }
+
+  .admin-site-item p {
+    margin: 0;
+    font-size: 12px;
+    color: #666;
+  }
+
+  .admin-site-status {
+    margin: 0;
+    color: #333;
+    font-size: 13px;
+    opacity: 0.9;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    border: none;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .btn-primary {
+    background: #667eea;
+    color: white;
+  }
+
+  .btn-secondary {
+    background: #f1f5ff;
+    color: #333;
+    border: 1px solid #dbe2ff;
+  }
+
+  .btn-primary:hover {
+    background: #5568d3;
+  }
+
+  .btn-secondary:hover {
+    background: #e6ecff;
+  }
+
+  .empty-state {
+    text-align: center;
+    color: #999;
+    padding: 30px 0;
+    font-size: 14px;
+  }
 
 .dashboard-loading {
   display: flex;

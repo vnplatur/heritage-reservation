@@ -1,8 +1,16 @@
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const Site = require("./src/models/Site");
+const User = require("./src/models/User");
 
 dotenv.config({ path: "./.env" });
+
+const adminAccount = {
+  name: "Admin User",
+  email: "admin@heritage.com",
+  password: "Admin@123",
+  role: "admin",
+};
 
 const sampleSites = [
   {
@@ -52,10 +60,20 @@ const seedSites = async () => {
 
     console.log("Connected to MongoDB for seeding");
 
+    const existingAdmin = await User.findOne({ email: adminAccount.email });
+    if (!existingAdmin) {
+      await User.create(adminAccount);
+      console.log(
+        `Admin account created: ${adminAccount.email} / ${adminAccount.password}`,
+      );
+    } else {
+      console.log("Admin account already exists.");
+    }
+
     const existingCount = await Site.countDocuments();
     if (existingCount > 0) {
       console.log(
-        `Database already contains ${existingCount} site(s). No seeding needed.`,
+        `Database already contains ${existingCount} site(s). No site seeding needed.`,
       );
       process.exit(0);
     }

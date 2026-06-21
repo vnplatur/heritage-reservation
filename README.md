@@ -287,6 +287,17 @@ reservationSchema.index({ site: 1, date: 1 });
 
 ---
 
+## 🔐 Default Admin Credentials
+
+After seeding the database, the following admin user is available for recruiter/demo access:
+
+- Email: `admin@heritage.com`
+- Password: `Admin@123`
+
+> Seed the database with `npm run seed` from the `backend` folder.
+
+---
+
 ## 📝 How to Use
 
 ### 1. Register

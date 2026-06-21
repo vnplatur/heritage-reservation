@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import io from "socket.io-client";
 import BookingForm from "../components/BookingForm";
+import AdminSiteManager from "../components/AdminSiteManager";
 import "./Dashboard.css";
 
 const Dashboard = () => {
@@ -172,6 +173,17 @@ const Dashboard = () => {
             ))}
           </div>
         </section>
+
+        {user?.role === "admin" && (
+          <section className="dashboard-section admin-panel">
+            <h2>Admin Site Management</h2>
+            <AdminSiteManager
+              sites={sites}
+              token={token}
+              onSitesChange={setSites}
+            />
+          </section>
+        )}
 
         <section className="dashboard-section booking-panel">
           <h2>
