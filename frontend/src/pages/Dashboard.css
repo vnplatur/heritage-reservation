@@ -1,0 +1,267 @@
+/* Dashboard CSS */
+
+.dashboard-container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.dashboard-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 25px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.dashboard-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.dashboard-nav {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.nav-button {
+  background: rgba(255, 255, 255, 0.16);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.25s ease;
+}
+
+.nav-button.active,
+.nav-button:hover {
+  background: rgba(255, 255, 255, 0.32);
+}
+
+.dashboard-userline {
+  text-align: right;
+}
+
+.dashboard-header p {
+  margin: 0;
+  font-size: 14px;
+  opacity: 0.95;
+}
+
+.logout-button {
+  border: none;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.logout-button:hover {
+  opacity: 0.9;
+}
+
+.dashboard-grid {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+@media (max-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.dashboard-section {
+  background: white;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-section h2 {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 22px;
+  border-bottom: 2px solid #667eea;
+  padding-bottom: 10px;
+}
+
+.sites-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+.site-card {
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 6px;
+  border: 1px solid #eee;
+  transition: all 0.3s;
+}
+
+.site-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.site-card h3 {
+  color: #333;
+  margin: 0 0 5px 0;
+  font-size: 16px;
+}
+
+.site-location {
+  color: #666;
+  font-size: 13px;
+  margin: 3px 0;
+}
+
+.site-description {
+  color: #888;
+  font-size: 12px;
+  margin: 8px 0;
+  line-height: 1.4;
+}
+
+.site-capacity {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #666;
+  margin: 10px 0;
+  padding: 8px 0;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+
+.btn-explore {
+  width: 100%;
+  padding: 8px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-explore:hover {
+  background: #5568d3;
+}
+
+.bookings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.booking-card {
+  padding: 15px;
+  background: #f9f9f9;
+  border-left: 4px solid #667eea;
+  border-radius: 6px;
+  transition: all 0.3s;
+}
+
+.booking-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.booking-confirmed {
+  border-left-color: #3c3;
+}
+
+.booking-cancelled {
+  border-left-color: #c33;
+  opacity: 0.7;
+}
+
+.booking-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.booking-header h4 {
+  margin: 0;
+  color: #333;
+}
+
+.status-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.status-confirmed {
+  background-color: #efe;
+  color: #3c3;
+}
+
+.status-cancelled {
+  background-color: #fee;
+  color: #c33;
+}
+
+.booking-details {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.booking-details p {
+  margin: 3px 0;
+}
+
+.btn-cancel {
+  padding: 6px 12px;
+  background: #c33;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-cancel:hover {
+  background: #b22;
+}
+
+.empty-state {
+  text-align: center;
+  color: #999;
+  padding: 30px 0;
+  font-size: 14px;
+}
+
+.dashboard-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 18px;
+  color: #667eea;
+}
