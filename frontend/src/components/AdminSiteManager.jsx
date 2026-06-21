@@ -78,7 +78,9 @@ const AdminSiteManager = ({ sites, token, onSitesChange }) => {
         );
         const updatedSite = result.data.site;
         onSitesChange((prev) =>
-          prev.map((site) => (site._id === updatedSite._id ? updatedSite : site)),
+          prev.map((site) =>
+            site._id === updatedSite._id ? updatedSite : site,
+          ),
         );
         setStatusMessage("Site updated successfully.");
       } else {
@@ -90,7 +92,8 @@ const AdminSiteManager = ({ sites, token, onSitesChange }) => {
       }
     } catch (error) {
       const message =
-        error.response?.data?.message || "Unable to save site. Please try again.";
+        error.response?.data?.message ||
+        "Unable to save site. Please try again.";
       setStatusMessage(message);
     } finally {
       setSaving(false);
@@ -102,7 +105,11 @@ const AdminSiteManager = ({ sites, token, onSitesChange }) => {
       <div className="admin-site-header">
         <h3>{selectedSite ? "Edit Site" : "Create New Heritage Site"}</h3>
         {selectedSite && (
-          <button type="button" className="btn-secondary" onClick={clearSelection}>
+          <button
+            type="button"
+            className="btn-secondary"
+            onClick={clearSelection}
+          >
             Create New
           </button>
         )}
