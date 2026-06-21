@@ -2,6 +2,7 @@
 
 A full-stack tourism and heritage site reservation platform with **absolute transaction safety under high concurrency**, **JWT-secured APIs**, and a **real-time monitoring dashboard**.
 
+<<<<<<< HEAD
 ## 🎯 Core Features
 
 ✅ **System Integrity (40%)**
@@ -34,6 +35,8 @@ A full-stack tourism and heritage site reservation platform with **absolute tran
 
 ---
 
+=======
+>>>>>>> 42f258939b6dabc4763e0ad95d30e160464ba53b
 ## 🏗️ Project Architecture
 
 ```
