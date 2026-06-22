@@ -468,19 +468,6 @@ curl -X POST http://localhost:5000/api/bookings \
 
 ---
 
-## ✅ Evaluation Checklist
-
-- [ ] Backend prevents double-booking under concurrent load
-- [ ] MongoDB transactions are ACID compliant
-- [ ] JWT tokens properly protect endpoints
-- [ ] No IDOR vulnerabilities (users only see own data)
-- [ ] Code is clean, modular, and well-documented
-- [ ] React dashboard updates in real-time via WebSocket
-- [ ] Error messages are helpful
-- [ ] Performance is acceptable under load
-
----
-
 ## 📞 Common Issues
 
 **MongoDB Connection Error**
@@ -508,34 +495,3 @@ WebSocket handshake failed
 → Backend Socket.io must be running, check port 5000
 
 ---
-
-## 📖 Further Reading
-
-- MongoDB Transactions: https://docs.mongodb.com/manual/transactions/
-- JWT Best Practices: https://tools.ietf.org/html/rfc7519
-- React Real-time Updates: https://socket.io/docs/v4/socket-io-protocol/
-- Concurrency Patterns: https://en.wikipedia.org/wiki/Concurrency_control
-
----
-
-## 🎓 Assignment Submission Notes
-
-**What to Submit:**
-
-1. `backend/` folder with all source code
-2. `frontend/` folder with all source code
-3. Updated `.env` (with dummy values)
-4. This README
-5. A concurrency test report showing zero double-bookings
-
-**What Evaluators Will Check:**
-
-- Codebase for AI generation artifacts
-- Functional correctness under concurrent load
-- Security vulnerabilities
-- Code maintainability and architecture
-- Your ability to explain the code
-
----
-
-Good luck! 🚀
